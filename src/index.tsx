@@ -3,6 +3,10 @@ import ReactDOM from "react-dom";
 import Routes from "./pages/routes";
 // import reportWebVitals from "./reportWebVitals";
 
+// ! styles
+import "@styles/global.style.css"
+
+
 //! redux
 import { Provider as ReduxProvider } from "react-redux";
 import { store } from "@redux/store";

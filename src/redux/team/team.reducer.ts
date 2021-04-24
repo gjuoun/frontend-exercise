@@ -14,7 +14,8 @@ export default function TeamReducer(state = initialState(), action: TeamAction):
     case TEAM_ACTION.UPDATE_TEAMS: {
       const newMap: Record<string, Team | RawTeam> = { ...state.teamMap }
       action.payload.forEach((team) => {
-        newMap[team.id] = team
+        const oldTeam = state.teamMap[team.id] as Team
+        newMap[team.id] = { ...oldTeam, ...team }
       })
       return { teamMap: newMap }
     }
@@ -34,11 +35,24 @@ export default function TeamReducer(state = initialState(), action: TeamAction):
       if (state.teamMap[teamId]) {
         const newMap: Record<string, Team | RawTeam> = { ...state.teamMap }
         const findTeam = newMap[teamId] as Team
-        findTeam.teamLead = teamLead
-        return { teamMap: newMap }
+
+        // avoid rewriting the teamlead
+        if (findTeam.teamLead?.id === teamLead.id) {
+          return { teamMap: newMap }
+        } else {
+          findTeam.teamLead = teamLead
+          return { teamMap: newMap }
+        }
       } else {
         return { ...state }
       }
+    }
+    case TEAM_ACTION.UPDATE_TEAM_DETAILS: {
+      const team = action.payload
+      const oldTeam = state.teamMap[team.id] as Team
+      const newMap: Record<string, Team | RawTeam> = { ...state.teamMap }
+      newMap[team.id] = { ...oldTeam, ...team }
+      return { teamMap: newMap }
     }
     default:
       return state

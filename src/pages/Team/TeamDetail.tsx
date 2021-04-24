@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import useTeamDetail from "@hooks/useTeamDetail.hook";
+import { Redirect, useParams } from "react-router-dom";
 
-interface Props {
+interface Params {
   teamId: string;
 }
 
-const TeamDetail = ({ teamId }: Props) => {
+const TeamDetail = () => {
+  // getting teamId from `/team/:teamId`
+  let { teamId } = useParams<Params>();
+
   const {
     updatedTeam,
     teamLoading,
@@ -15,8 +19,10 @@ const TeamDetail = ({ teamId }: Props) => {
     toggleMembers,
   } = useTeamDetail(teamId);
 
-  if (teamLoading) {
-    return <div>{updatedTeam.name}</div>;
+  if (!teamId) {
+    return <Redirect to={"/"}></Redirect>;
+  } else if (teamLoading || membersLoading || teamLeadLoading) {
+    return <div>Loading</div>;
   } else if (updatedTeam) {
     console.log(updatedTeam);
 
@@ -41,24 +47,8 @@ const TeamDetail = ({ teamId }: Props) => {
           })}
       </div>
     );
-
-    // return (
-    //   <div>
-    //     {updatedTeam.name} - member: {updatedTeam.teamMemberIds.length}
-    //     <button
-    //       type="button"
-    //       onClick={() => {
-    //         setToggleMembers((toggle) => !toggle);
-    //       }}
-    //     >
-    //       see members
-    //     </button>
-    //     <div>members</div>
-    //   </div>
-    // );
-    return <></>;
   } else {
-    return <></>;
+    return <>No team</>;
   }
 };
 

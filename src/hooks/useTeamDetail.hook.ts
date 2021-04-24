@@ -11,7 +11,11 @@ import {
 } from "@services/api.service";
 
 import { Team, User } from "@type/team.type";
-import { updateMembers as updateMembersAction, updateTeamLead as updateTeamLeadAction } from "@redux/team/team.action";
+import {
+  updateMembers as updateMembersAction,
+  updateTeamDetails as updateTeamDetailsAction,
+  updateTeamLead as updateTeamLeadAction
+} from "@redux/team/team.action";
 
 
 const useTeamDetail = (teamId: string) => {
@@ -28,14 +32,17 @@ const useTeamDetail = (teamId: string) => {
 
 
   // step 1, get team details
-  const { data: teamDetails, isLoading: teamLoading } = useQuery(["/teams", teamId],
+  const { data: teamDetails, isLoading: teamLoading } = useQuery(["teams", teamId],
     () => getTeam(teamId), {
     refetchOnReconnect: true,
     refetchOnWindowFocus: false,
+    onSuccess: (team) => {
+      if (team) updateTeamDetails(team)
+    }
   });
 
   // step 2. get team lead 
-  const { data: teamLead, isLoading: teamLeadLoading } = useQuery(["/users", teamDetails?.teamLeadId],
+  const { data: teamLead, isLoading: teamLeadLoading } = useQuery(["teamLead", teamId],
     () => {
       return getUser(teamDetails!.teamLeadId)
     },
@@ -50,7 +57,7 @@ const useTeamDetail = (teamId: string) => {
   )
 
   // step 2. get members details when toggled 
-  const { data, isLoading: membersLoading } = useQuery(["/users", teamId],
+  const { data, isLoading: membersLoading } = useQuery(["members", teamId],
     () => {
       return getManyUsers(teamDetails!.teamMemberIds)
     },
@@ -58,7 +65,9 @@ const useTeamDetail = (teamId: string) => {
       enabled: !!teamDetails && toggleMembers,
       onSuccess: (users) => {
         updateMembers(teamId, users)
-      }
+      },
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
     }
   )
 
@@ -71,6 +80,10 @@ const useTeamDetail = (teamId: string) => {
 
   const updateTeamLead = useCallback((teamId: string, teamLead: User) => {
     dispatch(updateTeamLeadAction(teamId, teamLead))
+  }, [dispatch])
+
+  const updateTeamDetails = useCallback((team: Team) => {
+    dispatch(updateTeamDetailsAction(team))
   }, [dispatch])
 
   return {

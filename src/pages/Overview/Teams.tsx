@@ -10,8 +10,8 @@ const Teams = ({ rawTeams }: { rawTeams: RawTeam[] }) => {
   const renderTeams = (teams: TeamIntf[]) => {
     return teams.map((team) => {
       return (
-        <li>
-          <Link to={`/team?teamId=${team.id}`}>{team.name}</Link>
+        <li key={team.id}>
+          <Link to={`/team/${team.id}`}>{team.name}</Link>
         </li>
       );
     });

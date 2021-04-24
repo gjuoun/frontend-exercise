@@ -8,12 +8,18 @@ export interface TeamState {
 export enum TEAM_ACTION {
   UPDATE_TEAMS = "UPDATE_TEAMS",
   UPDATE_MEMBERS = "UPDATE_MEMBERS",
+  UPDATE_TEAM_DETAILS = "UPDATE_TEAM_DETAILS",
   UPDATE_TEAMLEAD = "UPDATE_TEAMLEAD"
 }
 
 export interface UpdateTeamsAction extends Action<TEAM_ACTION.UPDATE_TEAMS> {
   type: TEAM_ACTION.UPDATE_TEAMS,
   payload: Team[] | RawTeam[]
+}
+
+export interface UpdateTeamsDetailsAction extends Action<TEAM_ACTION.UPDATE_TEAM_DETAILS> {
+  type: TEAM_ACTION.UPDATE_TEAM_DETAILS,
+  payload: Team
 }
 
 export interface UpdateMembersAction extends Action<TEAM_ACTION.UPDATE_MEMBERS> {
@@ -33,4 +39,7 @@ export interface UpdateTeamLeadAction extends Action<TEAM_ACTION.UPDATE_TEAMLEAD
 }
 
 
-export type TeamAction = UpdateTeamsAction | UpdateMembersAction | UpdateTeamLeadAction
+export type TeamAction = UpdateTeamsAction |
+  UpdateMembersAction |
+  UpdateTeamLeadAction |
+  UpdateTeamsDetailsAction
