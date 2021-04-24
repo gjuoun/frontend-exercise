@@ -3,9 +3,21 @@ import ReactDOM from "react-dom";
 import Routes from "./pages/routes";
 // import reportWebVitals from "./reportWebVitals";
 
+//! redux
+import { Provider as ReduxProvider } from "react-redux";
+import { store } from "@redux/store";
+
+//! react-query
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
-    <Routes />
+    <ReduxProvider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <Routes />
+    </QueryClientProvider>
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

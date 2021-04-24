@@ -1,20 +1,5 @@
-import axios from '../config/axios';
-
-export interface User {
-  id: string;
-  displayName: string;
-  firstName?: string;
-  lastName?: string;
-  avatarUrl?: string;
-  location?: string;
-}
-
-export interface Team {
-  id: string;
-  name: string;
-  teamLeadId?: string;
-  teamMemberIds: string[];
-}
+import { Team, User } from '@type/team.type';
+import axios from '@config/axios';
 
 
 export const getAllUsers = async () => {
