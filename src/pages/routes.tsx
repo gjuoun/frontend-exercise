@@ -6,14 +6,14 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
-import Team from "./Team/Team";
+import Teams from "./Overview/Overview";
 
 export default function Routes() {
   return (
     <Router>
       <Switch>
-        <Route path="/">
-          <Team />
+        <Route path="/" exact>
+          <Teams />
         </Route>
         <Redirect to="/"></Redirect>
       </Switch>

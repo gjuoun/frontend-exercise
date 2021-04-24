@@ -1,7 +1,7 @@
-import { Team, User } from '@type/team.type'
+import { RawTeam, Team, User } from '@type/team.type'
 import { TeamAction, TEAM_ACTION } from './team.reduxType'
 
-export const updateTeams = (teams: Team[]): TeamAction => ({
+export const updateTeams = (teams: Team[] | RawTeam[]): TeamAction => ({
   type: TEAM_ACTION.UPDATE_TEAMS,
   payload: teams
 })

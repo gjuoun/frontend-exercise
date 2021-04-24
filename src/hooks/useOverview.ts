@@ -8,21 +8,22 @@ import {
   getAllUsers,
   getAllTeams,
   getManyUsers,
-  getManyTeams,
 } from "@services/api.service";
 
-import { RawTeam} from "@type/team.type";
+import { RawTeam, Team, User } from "@type/team.type";
 import { updateTeams as updateTeamsAction } from "@redux/team/team.action";
 
 
-const useTeams = (rawTeams: RawTeam[]) => {
+const useOverview = () => {
   const dispatch = useDispatch()
 
-  const teamIds = useMemo(() => {
-    return rawTeams.map((team) => team.id)
-  }, [rawTeams])
+  const teamMap = useSelector((state) => state.teamState.teamMap)
 
-  const { data: teams, isLoading: teamsLoading } = useQuery("/teams", () => getManyTeams(teamIds), {
+  const rawTeams = useMemo(() => {
+    return Array.from(Object.values(teamMap)) as RawTeam[]
+  }, [teamMap])
+
+  const { isLoading: rawTeamsLoading } = useQuery("/teams", () => getAllTeams(), {
     onSuccess: (teams) => {
       updateTeams(teams)
     },
@@ -36,9 +37,9 @@ const useTeams = (rawTeams: RawTeam[]) => {
   )
 
   return {
-    teams,
-    teamsLoading
+    rawTeams,
+    rawTeamsLoading
   }
 }
 
-export default useTeams
+export default useOverview

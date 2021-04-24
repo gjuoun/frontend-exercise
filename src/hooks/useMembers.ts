@@ -10,16 +10,17 @@ import { Team, User } from "@type/team.type";
 import { updateMembers as updateMembersAction } from "@redux/team/team.action";
 
 
-const useMembers = ({ id: teamId, teamMemberIds }: Team) => {
+const useMembers = (teamId: string, memberIds: string[]) => {
   const dispatch = useDispatch()
   const teamMap = useSelector((state) => state.teamState.teamMap)
 
   const members = useMemo(() => {
-    return teamMap[teamId].members
+    const team = teamMap[teamId] as Team
+    return team.members
   }, [teamMap, teamId])
 
   const { isLoading: membersLoading, } = useQuery(teamId,
-    () => getManyUsers(teamMemberIds!), {
+    () => getManyUsers(memberIds!), {
     onSuccess: (users) => {
       updateMembers(teamId, users)
     },

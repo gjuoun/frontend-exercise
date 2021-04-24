@@ -1,6 +1,9 @@
-export interface User {
+export interface RawUser {
   id: string;
   displayName: string;
+}
+
+export interface User extends RawUser {
   firstName: string;
   lastName: string;
   avatarUrl: string;
@@ -10,10 +13,10 @@ export interface User {
 export interface RawTeam {
   id: string;
   name: string;
-  teamLeadId: string;
-  teamMemberIds: string[];
 }
 
 export interface Team extends RawTeam {
+  teamLeadId: string;
+  teamMemberIds: string[];
   members?: User[];
 }

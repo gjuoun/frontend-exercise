@@ -1,10 +1,10 @@
-import { Team, User } from '@type/team.type';
+import { RawTeam, RawUser, Team, User } from '@type/team.type';
 import axios from '@config/axios';
 
 
 export const getAllUsers = async () => {
   try {
-    const { data: users } = await axios.get<User[]>("/users")
+    const { data: users } = await axios.get<RawUser[]>("/users")
     if (users.length) {
       return users
     } else {
@@ -17,7 +17,7 @@ export const getAllUsers = async () => {
 
 export const getAllTeams = async () => {
   try {
-    const { data: teams } = await axios.get<Team[]>("/teams")
+    const { data: teams } = await axios.get<RawTeam[]>("/teams")
     if (teams.length) {
       return teams
     } else {
@@ -43,7 +43,7 @@ export const getUser = async (userId: string) => {
 
 export const getTeam = async (teamId: string) => {
   try {
-    const { data: team } = await axios.get<Team>(`/team/${teamId}`)
+    const { data: team } = await axios.get<Team>(`/teams/${teamId}`)
     if (team) {
       return team
     } else {
@@ -63,6 +63,25 @@ export const getManyUsers = (userIds: string[]) => {
           resolve(user)
         } else {
           reject("invalid userId")
+        }
+      } catch (e) {
+        reject(e)
+      }
+    })
+  })
+
+  return Promise.all(promises)
+}
+
+export const getManyTeams = (teamIds: string[]) => {
+  const promises = teamIds.map((teamId) => {
+    return new Promise<Team>(async (resolve, reject) => {
+      try {
+        const team = await getTeam(teamId)
+        if (team) {
+          resolve(team)
+        } else {
+          reject("invalid teamId")
         }
       } catch (e) {
         reject(e)

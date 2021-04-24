@@ -1,8 +1,8 @@
-import { Team, User } from '@type/team.type';
+import { RawTeam, Team, User } from '@type/team.type';
 import { Action } from 'redux'
 
 export interface TeamState {
-  teamMap: Record<string, Team>;
+  teamMap: Record<string, Team | RawTeam>;
 }
 
 export enum TEAM_ACTION {
@@ -12,7 +12,7 @@ export enum TEAM_ACTION {
 
 export interface UpdateTeamsAction extends Action<TEAM_ACTION.UPDATE_TEAMS> {
   type: TEAM_ACTION.UPDATE_TEAMS,
-  payload: Team[]
+  payload: Team[] | RawTeam[]
 }
 
 export interface UpdateMembersAction extends Action<TEAM_ACTION.UPDATE_MEMBERS> {
