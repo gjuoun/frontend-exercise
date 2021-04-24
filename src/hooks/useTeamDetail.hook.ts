@@ -1,6 +1,6 @@
 
 import React, { useEffect, useCallback, useMemo, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueries } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getUser,
@@ -11,10 +11,10 @@ import {
 } from "@services/api.service";
 
 import { Team, User } from "@type/team.type";
-import { updateMembers as updateMembersAction } from "@redux/team/team.action";
+import { updateMembers as updateMembersAction, updateTeamLead as updateTeamLeadAction } from "@redux/team/team.action";
 
 
-const useTeam = (teamId: string) => {
+const useTeamDetail = (teamId: string) => {
 
   const [toggleMembers, setToggleMembers] = useState(false)
 
@@ -26,16 +26,32 @@ const useTeam = (teamId: string) => {
     return teamMap[teamId] as Team
   }, [teamMap, teamId])
 
+
+  // step 1, get team details
   const { data: teamDetails, isLoading: teamLoading } = useQuery(["/teams", teamId],
     () => getTeam(teamId), {
     refetchOnReconnect: true,
     refetchOnWindowFocus: false,
   });
 
+  // step 2. get team lead 
+  const { data: teamLead, isLoading: teamLeadLoading } = useQuery(["/users", teamDetails?.teamLeadId],
+    () => {
+      return getUser(teamDetails!.teamLeadId)
+    },
+    {
+      enabled: !!teamDetails,
+      onSuccess: (teamLead) => {
+        if (teamLead) updateTeamLead(teamId, teamLead)
+      },
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    }
+  )
+
+  // step 2. get members details when toggled 
   const { data, isLoading: membersLoading } = useQuery(["/users", teamId],
     () => {
-      console.log("start query members");
-      
       return getManyUsers(teamDetails!.teamMemberIds)
     },
     {
@@ -46,17 +62,25 @@ const useTeam = (teamId: string) => {
     }
   )
 
+
+
+  // util functions
   const updateMembers = useCallback((teamId: string, members: User[]) => {
     dispatch(updateMembersAction(teamId, members))
+  }, [dispatch])
+
+  const updateTeamLead = useCallback((teamId: string, teamLead: User) => {
+    dispatch(updateTeamLeadAction(teamId, teamLead))
   }, [dispatch])
 
   return {
     updatedTeam,
     teamLoading,
+    teamLeadLoading,
     membersLoading,
     toggleMembers,
     setToggleMembers
   }
 }
 
-export default useTeam
+export default useTeamDetail

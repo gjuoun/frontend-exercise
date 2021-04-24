@@ -1,4 +1,3 @@
-import useMembers from "@hooks/useMembers";
 import { Team, User } from "@type/team.type";
 import React from "react";
 
@@ -9,8 +8,6 @@ interface Props {
 }
 
 const Member = ({ teamId, memberIds }: Props) => {
-  const { members, membersLoading } = useMembers(teamId, memberIds);
-
   // if (membersLoading) {
   //   return <p>Member is loading</p>;
   // } else if (members) {
@@ -30,7 +27,7 @@ const Member = ({ teamId, memberIds }: Props) => {
   // } else {
   //   return <></>;
   // }
-  return <></>
+  return <></>;
 };
 
 export default Member;

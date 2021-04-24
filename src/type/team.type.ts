@@ -19,4 +19,5 @@ export interface Team extends RawTeam {
   teamLeadId: string;
   teamMemberIds: string[];
   members?: User[];
+  teamLead?: User;
 }

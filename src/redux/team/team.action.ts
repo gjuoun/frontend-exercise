@@ -11,3 +11,8 @@ export const updateMembers = (teamId: string, members: User[]): TeamAction => ({
   payload: { teamId, members }
 })
 
+
+export const updateTeamLead = (teamId: string, teamLead: User): TeamAction => ({
+  type: TEAM_ACTION.UPDATE_TEAMLEAD,
+  payload: { teamId, teamLead }
+})
