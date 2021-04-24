@@ -2,7 +2,7 @@ import { Team, User } from '@type/team.type';
 import { Action } from 'redux'
 
 export interface TeamState {
-  teamMap: Map<string, Team>;
+  teamMap: Record<string, Team>;
 }
 
 export enum TEAM_ACTION {

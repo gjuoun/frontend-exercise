@@ -8,7 +8,11 @@ let reduxExtension = undefined;
 if (env.redux.enableChromeExtension
   && window.__REDUX_DEVTOOLS_EXTENSION__) {
 
-  reduxExtension = window.__REDUX_DEVTOOLS_EXTENSION__()
+  reduxExtension = window.__REDUX_DEVTOOLS_EXTENSION__({
+    serialize: {
+      options: true
+    }
+  })
 }
 
 export const store = createStore(

@@ -3,32 +3,33 @@ import { TeamAction, TeamState, TEAM_ACTION } from './team.reduxType'
 
 const initialState = (): TeamState => {
   return {
-    teamMap: new Map()
+    teamMap: {}
   }
 }
 
 
-export default function TeamReducer({ teamMap } = initialState(), action: TeamAction): TeamState {
+export default function TeamReducer(state = initialState(), action: TeamAction): TeamState {
 
   switch (action.type) {
     case TEAM_ACTION.UPDATE_TEAMS: {
-      const newMap = new Map()
+      const newMap: Record<string, Team> = {}
       action.payload.forEach((team) => {
-        newMap.set(team.id, team)
+        newMap[team.id] = team
       })
-      return { teamMap: newMap }
+      return { ...state, teamMap: newMap }
     }
     case TEAM_ACTION.UPDATE_MEMBERS: {
       const { teamId, members } = action.payload
-      if (teamMap.has(teamId)) {
-        const team = teamMap.get(teamId)
-        team!.members = members
-        return { teamMap: { ...teamMap } }
+      if (state.teamMap[teamId]) {
+        const newMap: Record<string, Team> = { ...state.teamMap }
+        const findTeam = newMap[teamId]
+        findTeam.members = members
+        return { teamMap: newMap }
       } else {
-        return { teamMap }
+        return { ...state }
       }
     }
     default:
-      return { teamMap }
+      return { ...state }
   }
 }
