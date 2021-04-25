@@ -5,7 +5,6 @@ import styled from "styled-components/macro";
 import { ListGroup } from "react-bootstrap";
 
 interface Props {
-  pageNum: number;
   rawTeams: RawTeam[];
 }
 

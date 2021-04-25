@@ -129,7 +129,7 @@ const Overview = (props: Props) => {
     const start = (pageNum - 1) * pageLimit;
     const end = pageNum * pageLimit;
     const teamSlice = teams.slice(start, end);
-    return <TeamList pageNum={pageNum} rawTeams={teamSlice}></TeamList>;
+    return <TeamList rawTeams={teamSlice}></TeamList>;
   };
 
   const renderPagination = (teams: RawTeam[]) => {
