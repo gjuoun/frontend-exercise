@@ -133,7 +133,7 @@ const Overview = (props: Props) => {
   };
 
   const renderPagination = (teams: RawTeam[]) => {
-    const totalPages = Math.floor(teams.length / pageLimit);
+    const totalPages = Math.ceil(teams.length / pageLimit);
     const pages = [];
     for (let num = 1; num <= totalPages; num++) {
       pages.push(
