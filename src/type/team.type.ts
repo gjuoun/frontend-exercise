@@ -8,6 +8,7 @@ export interface User extends RawUser {
   lastName: string;
   avatarUrl: string;
   location: string;
+  role: string;
 }
 
 export interface RawTeam {

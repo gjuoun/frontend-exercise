@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RawTeam, Team as TeamIntf, User } from "@type/team.type";
 import useTeams from "@hooks/useTeams.hook";
-import TeamDetail from "../../pages/Team/TeamDetail";
+import Team from "../../pages/Team/Team";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components/macro";
 import { Col, ListGroup, Row } from "react-bootstrap";
@@ -15,8 +15,6 @@ interface Props {
 
 const Teams = ({ rawTeams, pageNum }: Props) => {
   const { teams, teamsLoading, refetchTeams } = useTeams(rawTeams);
-
-  const [activeTeamId, setActiveTeamId] = useState("");
 
   useEffect(() => {
     // retetch teams if pageNum is changed

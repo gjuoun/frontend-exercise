@@ -1,7 +1,7 @@
 import React from "react";
 import useOverview from "@hooks/useOverview.hook";
 import { RawTeam } from "@type/team.type";
-import Navigation from "@components/Navigation./Navigation";
+import Navigation from "@components/Navigation/Navigation";
 import { Card, Container, Pagination, Row } from "react-bootstrap";
 import Spinner from "@components/Spinner/Spinner";
 import Teams from "../../components/TeamList/TeamList";
@@ -52,8 +52,7 @@ const Overview = (props: Props) => {
   // return <>{renderRawTeams(rawTeams)}</>;
 
   return (
-    <div>
-      <Navigation></Navigation>
+    <> 
       <Container>
         <Row>
           <OverviewCard>
@@ -69,7 +68,7 @@ const Overview = (props: Props) => {
         </Row>
         <Row></Row>
       </Container>
-    </div>
+    </>
   );
 };
 

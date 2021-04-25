@@ -8,7 +8,7 @@ import useTeamDetail from "@hooks/useTeamDetail.hook";
 import Spinner from "@components/Spinner/Spinner";
 import useTeamPreview from "@hooks/useTeamPreview.hook";
 import Member from "@components/Team/Member";
-import TeamDetails from "@components/Team/TeamDetails";
+import TeamPreview from "@components/Team/TeamPreview";
 
 interface Props {
   team: Team;
@@ -19,7 +19,7 @@ const TeamListItem = ({ team }: Props) => {
 
   const renderDetails = (toggleDetails: boolean) => {
     if (toggleDetails) {
-      return <TeamDetails teamId={team.id}></TeamDetails>;
+      return <TeamPreview teamId={team.id}></TeamPreview>;
     } else {
       return <></>;
     }

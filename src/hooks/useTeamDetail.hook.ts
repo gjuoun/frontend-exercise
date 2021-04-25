@@ -20,14 +20,17 @@ import {
 
 const useTeamDetail = (teamId: string) => {
 
-  const [toggleMembers, setToggleMembers] = useState(false)
 
   const dispatch = useDispatch()
 
   const teamMap = useSelector((state) => state.teamState.teamMap)
 
   const updatedTeam = useMemo(() => {
-    return teamMap[teamId] as Team
+    if (teamMap[teamId]) {
+      return teamMap[teamId] as Team
+    } else {
+      return undefined
+    }
   }, [teamMap, teamId])
 
 
@@ -37,7 +40,9 @@ const useTeamDetail = (teamId: string) => {
     refetchOnReconnect: true,
     refetchOnWindowFocus: false,
     onSuccess: (team) => {
-      if (team) updateTeamDetails(team)
+      if (team) {
+        updateTeamDetails(team)
+      }
     }
   });
 
@@ -49,7 +54,11 @@ const useTeamDetail = (teamId: string) => {
     {
       enabled: !!teamDetails,
       onSuccess: (teamLead) => {
-        if (teamLead) updateTeamLead(teamId, teamLead)
+        if (teamLead) {
+          // set role
+          updateTeamLead(teamId, { ...teamLead, role: "Team Lead" })
+        }
+
       },
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
@@ -62,9 +71,13 @@ const useTeamDetail = (teamId: string) => {
       return getManyUsers(teamDetails!.teamMemberIds)
     },
     {
-      enabled: !!teamDetails && toggleMembers,
+      enabled: !!teamDetails,
       onSuccess: (users) => {
-        updateMembers(teamId, users)
+        if (users) {
+          // set role
+          const formattedUsers = users.map((user) => ({ ...user, role: "Member" }))
+          updateMembers(teamId, formattedUsers)
+        }
       },
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
@@ -91,8 +104,6 @@ const useTeamDetail = (teamId: string) => {
     teamLoading,
     teamLeadLoading,
     membersLoading,
-    toggleMembers,
-    setToggleMembers
   }
 }
 

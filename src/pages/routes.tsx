@@ -1,27 +1,19 @@
+import PublicRoute from "@components/Route/PublicRoute";
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import Overview from "./Overview/Overview";
-import TeamDetail from "./Team/TeamDetail";
+import Team from "./Team/Team";
 
 export default function Routes() {
-  const queryParams = new URLSearchParams(window.location.search);
-
   return (
     <Router>
       <Switch>
-        <Route path="/" exact>
+        <PublicRoute path="/" exact>
           <Overview />
-        </Route>
-        <Route path="/team/:teamId">
-          <TeamDetail />
-        </Route>
+        </PublicRoute>
+        <PublicRoute path="/team/:teamId">
+          <Team />
+        </PublicRoute>
         <Redirect to="/"></Redirect>
       </Switch>
     </Router>

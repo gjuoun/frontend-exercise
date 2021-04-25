@@ -14,7 +14,7 @@ interface Props {
   teamId: string;
 }
 
-const TeamDetails = ({ teamId }: Props) => {
+const TeamPreview = ({ teamId }: Props) => {
   const {
     teamDetails,
     teamLead,
@@ -43,4 +43,4 @@ const TeamDetailsRow = styled(Row)`
 `;
 
 
-export default TeamDetails;
+export default TeamPreview;
