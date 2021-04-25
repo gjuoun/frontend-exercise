@@ -1,8 +1,22 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import useTeamDetail from "@hooks/useTeamDetail.hook";
-import { Redirect, useParams, useRouteMatch } from "react-router-dom";
+import { Link, Redirect, useParams, useRouteMatch } from "react-router-dom";
 import styled from "styled-components/macro";
-import { Card, Col, Container, Form, Overlay, Row } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  Container,
+  Form,
+  Overlay,
+  Row,
+  Breadcrumb,
+} from "react-bootstrap";
 import Spinner from "@components/Spinner/Spinner";
 import Member from "@components/Team/Member";
 import { Team as TeamIntf, User } from "@type/team.type";
@@ -44,24 +58,27 @@ const Team = () => {
     }
   }, [membersClone, setSearchResults]);
 
-  const searchMembers = useCallback((searchString: string) => {
-    const _self = debounce((searchString: string) => {
-      setSearchResults(() => {
-        const inputLowerCase = searchString.toLowerCase();
-        const findMembers = membersClone.filter((member) => {
-          const fullName = `${member.firstName} ${member.lastName}`.toLowerCase();
-          if (fullName.includes(inputLowerCase)) {
-            return true;
-          } else {
-            return false;
-          }
+  const searchMembers = useCallback(
+    (searchString: string) => {
+      const _self = debounce((searchString: string) => {
+        setSearchResults(() => {
+          const inputLowerCase = searchString.toLowerCase();
+          const findMembers = membersClone.filter((member) => {
+            const fullName = `${member.firstName} ${member.lastName}`.toLowerCase();
+            if (fullName.includes(inputLowerCase)) {
+              return true;
+            } else {
+              return false;
+            }
+          });
+          return findMembers;
         });
-        return findMembers;
-      });
-    }, 500);
+      }, 500);
 
-    _self(searchString);
-  }, [setSearchResults, membersClone]);
+      _self(searchString);
+    },
+    [setSearchResults, membersClone]
+  );
 
   const handleOnChange = (searchString: string) => {
     setUserInput(searchString);
@@ -132,6 +149,14 @@ const Team = () => {
     return (
       <Container>
         <Row>
+          <TeamBreadcrumb>
+            <Breadcrumb.Item as={Link} to="/" href="/">
+              Home
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active>{updatedTeam.name}</Breadcrumb.Item>
+          </TeamBreadcrumb>
+        </Row>
+        <Row>
           <TeamCard>
             <Card.Body>
               <Card.Title>{renderTitle(updatedTeam)}</Card.Title>
@@ -152,6 +177,12 @@ const Team = () => {
 export default Team;
 
 const TeamCard = styled(Card)`
-  margin-top: 1rem;
   width: 100%;
+`;
+
+const TeamBreadcrumb = styled(Breadcrumb)`
+  & > ol {
+    margin-bottom: 0;
+    background: transparent;
+  }
 `;
