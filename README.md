@@ -1,9 +1,9 @@
 # Frontend exercise
 > a simple team Overview app 
 
-* Build with Create React App with Typescript
-* ### [Live Demo](https://frontend-exercise-jun.vercel.app/)
+* Build with Create React App with Typescript 
 
+## [Live Demo](https://frontend-exercise-jun.vercel.app/)
 
 ## Usage
 
