@@ -1,5 +1,5 @@
 
-import React, { useEffect, useCallback, useMemo } from "react";
+import React, { useEffect, useCallback, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -16,6 +16,9 @@ import { updateTeams as updateTeamsAction } from "@redux/team/team.action";
 
 const useOverview = () => {
   const dispatch = useDispatch()
+
+  const [pageLimit, setPageLimit] = useState(20)
+  const [pageNum, setPageNum] = useState(1)
 
   const teamMap = useSelector((state) => state.teamState.teamMap)
 
@@ -38,7 +41,11 @@ const useOverview = () => {
 
   return {
     rawTeams,
-    rawTeamsLoading
+    rawTeamsLoading,
+    pageNum,
+    setPageNum,
+    pageLimit,
+    setPageLimit,
   }
 }
 

@@ -11,7 +11,7 @@ import {
   getManyTeams,
 } from "@services/api.service";
 
-import { RawTeam} from "@type/team.type";
+import { RawTeam } from "@type/team.type";
 import { updateTeams as updateTeamsAction } from "@redux/team/team.action";
 
 
@@ -22,7 +22,7 @@ const useTeams = (rawTeams: RawTeam[]) => {
     return rawTeams.map((team) => team.id)
   }, [rawTeams])
 
-  const { data: teams, isLoading: teamsLoading } = useQuery("/teams", () => getManyTeams(teamIds), {
+  const { data: teams, isLoading: teamsLoading, refetch: refetchTeams } = useQuery(["/teams", rawTeams], () => getManyTeams(teamIds), {
     onSuccess: (teams) => {
       updateTeams(teams)
     },
@@ -37,7 +37,8 @@ const useTeams = (rawTeams: RawTeam[]) => {
 
   return {
     teams,
-    teamsLoading
+    teamsLoading,
+    refetchTeams
   }
 }
 
