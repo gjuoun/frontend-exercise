@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RawTeam, Team as TeamIntf, User } from "@type/team.type";
 import useTeams from "@hooks/useTeams.hook";
-import TeamDetail from "../Team/TeamDetail";
+import TeamDetail from "../../pages/Team/TeamDetail";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components/macro";
 import { Col, ListGroup, Row } from "react-bootstrap";
@@ -25,12 +25,7 @@ const Teams = ({ rawTeams, pageNum }: Props) => {
 
   const renderTeams = (teams: TeamIntf[]) => {
     return teams.map((team) => {
-      return (
-        <TeamListItem
-          key={team.id}
-          team={team}
-        />
-      );
+      return <TeamListItem key={team.id} team={team} />;
     });
   };
 

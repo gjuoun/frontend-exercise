@@ -1,9 +1,14 @@
-import { Team } from "@type/team.type";
+import { Team, User } from "@type/team.type";
 import { Link, useLocation } from "react-router-dom";
-import { Col, ListGroup, Row } from "react-bootstrap";
-import { useState } from "react";
+import { Button, Card, Col, ListGroup, Media, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import { FiChevronsDown, FiChevronsUp } from "react-icons/fi";
 import styled from "styled-components/macro";
+import useTeamDetail from "@hooks/useTeamDetail.hook";
+import Spinner from "@components/Spinner/Spinner";
+import useTeamPreview from "@hooks/useTeamPreview.hook";
+import Member from "@components/Team/Member";
+import TeamDetails from "@components/Team/TeamDetails";
 
 interface Props {
   team: Team;
@@ -11,6 +16,14 @@ interface Props {
 
 const TeamListItem = ({ team }: Props) => {
   const [toggleDetails, setToggleDetails] = useState(false);
+
+  const renderDetails = (toggleDetails: boolean) => {
+    if (toggleDetails) {
+      return <TeamDetails teamId={team.id}></TeamDetails>;
+    } else {
+      return <></>;
+    }
+  };
 
   return (
     <ListGroup.Item
@@ -27,6 +40,7 @@ const TeamListItem = ({ team }: Props) => {
           <Icon>{toggleDetails ? <FiChevronsUp /> : <FiChevronsDown />}</Icon>
         </Col>
       </Row>
+      <Row className="d-flex flex-column">{renderDetails(toggleDetails)}</Row>
     </ListGroup.Item>
   );
 };

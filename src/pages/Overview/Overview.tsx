@@ -4,7 +4,7 @@ import { RawTeam } from "@type/team.type";
 import Navigation from "@components/Navigation./Navigation";
 import { Card, Container, Pagination, Row } from "react-bootstrap";
 import Spinner from "@components/Spinner/Spinner";
-import Teams from "./TeamList";
+import Teams from "../../components/TeamList/TeamList";
 import styled from "styled-components/macro";
 
 interface Props {

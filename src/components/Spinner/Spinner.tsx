@@ -2,20 +2,24 @@ import React from "react";
 import { Col, Row, Spinner as SpinnerBase } from "react-bootstrap";
 import styled from "styled-components/macro";
 
-const Spinner = () => {
+interface Props {
+  height?: string;
+}
+
+const Spinner = ({ height = "" }: Props) => {
   return (
-    <SpinnerContainer>
+    <SpinnerContainer height={height}>
       <SpinnerBase animation="border" variant="primary"></SpinnerBase>
     </SpinnerContainer>
   );
 };
 
-const SpinnerContainer = styled.div`
+const SpinnerContainer = styled.div<{ height: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: calc(100vh - 300px);
+  height: ${(props) => (props.height ? props.height : `calc(100vh - 300px)`)};
 `;
 
 export default Spinner;
