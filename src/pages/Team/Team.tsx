@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import useTeamDetail from "@hooks/useTeamDetail.hook";
-import { Link, Redirect, useParams, useRouteMatch } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import styled from "styled-components/macro";
 import {
   Card,
@@ -21,6 +21,8 @@ import Spinner from "@components/Spinner/Spinner";
 import Member from "@components/Team/Member";
 import { Team as TeamIntf, User } from "@type/team.type";
 import { debounce } from "lodash";
+import { Helmet } from "react-helmet";
+
 
 interface Params {
   teamId: string;
@@ -147,27 +149,32 @@ const Team = () => {
     return <Spinner height="20rem"></Spinner>;
   } else if (updatedTeam) {
     return (
-      <Container>
-        <Row>
-          <TeamBreadcrumb>
-            <Link className="breadcrumb-item" to={"/"}>
-              Home
-            </Link>
-            <Breadcrumb.Item active>{updatedTeam.name}</Breadcrumb.Item>
-          </TeamBreadcrumb>
-        </Row>
-        <Row>
-          <TeamCard>
-            <Card.Body>
-              <Card.Title>{renderTitle(updatedTeam)}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                View team members
-              </Card.Subtitle>
-              {renderList(searchResults)}
-            </Card.Body>
-          </TeamCard>
-        </Row>
-      </Container>
+      <>
+        <Helmet>
+          <title>{updatedTeam.name}</title>
+        </Helmet>
+        <Container>
+          <Row>
+            <TeamBreadcrumb>
+              <Link className="breadcrumb-item" to={"/"}>
+                Home
+              </Link>
+              <Breadcrumb.Item active>{updatedTeam.name}</Breadcrumb.Item>
+            </TeamBreadcrumb>
+          </Row>
+          <Row>
+            <TeamCard>
+              <Card.Body>
+                <Card.Title>{renderTitle(updatedTeam)}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  View team members
+                </Card.Subtitle>
+                {renderList(searchResults)}
+              </Card.Body>
+            </TeamCard>
+          </Row>
+        </Container>
+      </>
     );
   } else {
     return <>Nothing to show</>;

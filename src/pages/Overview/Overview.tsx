@@ -20,6 +20,7 @@ import Spinner from "@components/Spinner/Spinner";
 import TeamList from "../../components/TeamList/TeamList";
 import styled from "styled-components/macro";
 import { debounce } from "lodash";
+import { Helmet } from "react-helmet";
 
 interface Props {
   children?: React.ReactNode;
@@ -153,6 +154,9 @@ const Overview = (props: Props) => {
 
   return (
     <>
+      <Helmet>
+        <title>Team Overview</title>
+      </Helmet>
       <Container>
         <Row>
           <OverviewCard>
