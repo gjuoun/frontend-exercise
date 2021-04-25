@@ -38,9 +38,9 @@ To test the app:
 
 ## About this project
 
-This project is intenede to be my submission to a code test from Tempo.io. The gola is to build a team overview web app.
+This project is intended to be my submission to a code test from Tempo.io. The goal is to build a team overview web app.
 
-As I'm pretty familiary with react and typescript, then I chose `create-react-app --template typescript` as the project boilerplate, and `react-bootstrap` as the UI framework.
+As I'm pretty familiar with react and typescript, then I chose `create-react-app --template typescript` as the project boilerplate, and `react-bootstrap` as the UI framework.
 
 The app looks straightfoward but the trickest part is state management, I assumed this project is to be an enterprise ready-app so that I used `react-redux` but I found it's not necessary.
 
