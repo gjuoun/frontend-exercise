@@ -19,7 +19,7 @@ const SpinnerContainer = styled.div<{ height: string }>`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: ${(props) => (props.height ? props.height : `calc(100vh - 300px)`)};
+  height: ${(props) => (props.height ? props.height : `calc(50vh - 1px)`)};
 `;
 
 export default Spinner;

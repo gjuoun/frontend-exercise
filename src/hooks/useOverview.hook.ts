@@ -17,7 +17,7 @@ import { updateTeams as updateTeamsAction } from "@redux/team/team.action";
 const useOverview = () => {
   const dispatch = useDispatch()
 
-  const [pageLimit, setPageLimit] = useState(20)
+  const [pageLimit, setPageLimit] = useState(10)
   const [pageNum, setPageNum] = useState(1)
 
   const teamMap = useSelector((state) => state.teamState.teamMap)
