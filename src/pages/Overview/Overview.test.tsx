@@ -28,7 +28,7 @@ beforeEach(() => {
   );
 });
 
-describe("Test Team", () => {
+describe("Test Overview", () => {
   test("should render correctly", async () => {
     const el = await screen.findByText(team.name, undefined, {
       timeout: 5000,
