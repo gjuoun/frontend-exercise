@@ -42,9 +42,9 @@ This project is intended to be my submission to a code test from Tempo.io. The g
 
 As I'm pretty familiar with react and typescript, then I chose `create-react-app --template typescript` as the project boilerplate, and `react-bootstrap` as the UI framework.
 
-The app looks straightfoward but the trickist part is state management, I assumed this project is to be an enterprise ready-app so that I used `react-redux` but I found it's not necessary.
+The app looks straightforward, but the trickiest part is state management, I assumed this project is to be an enterprise-ready app, so that I used `react-redux` but I found it's not necessary.
 
-Anyway, it's there, if you want to skip the redux part please ignore `./src/redux` folder.
+Anyway, it's there; if you want to skip the redux part, please ignore the`./src/redux` folder.
 
 ### Important files to look at
 
