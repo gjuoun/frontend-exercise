@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Spinner as SpinnerBase } from "react-bootstrap";
+import {  Spinner as SpinnerBase } from "react-bootstrap";
 import styled from "styled-components/macro";
 
 interface Props {

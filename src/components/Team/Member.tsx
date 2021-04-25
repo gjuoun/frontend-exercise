@@ -1,18 +1,7 @@
-import { Team, User } from "@type/team.type";
-import { Link, useLocation } from "react-router-dom";
-import { Button, Card, Col, ListGroup, Media, Row } from "react-bootstrap";
-import React, { useEffect, useState } from "react";
-import { FiChevronsDown, FiChevronsUp } from "react-icons/fi";
-import styled from "styled-components/macro";
-import useTeamDetail from "@hooks/useTeamDetail.hook";
-import Spinner from "@components/Spinner/Spinner";
-import useTeamPreview from "@hooks/useTeamPreview.hook";
+import { User } from "@type/team.type";
+import { Button, Row, Col } from "react-bootstrap";
+import React from "react";
 
-interface Props {
-  children?: React.ReactNode;
-  teamId: string;
-  memberIds: string[];
-}
 
 const Member = ({
   member,

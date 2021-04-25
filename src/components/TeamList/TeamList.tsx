@@ -1,42 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { RawTeam, Team as TeamIntf, User } from "@type/team.type";
-import useTeams from "@hooks/useTeams.hook";
-import Team from "../../pages/Team/Team";
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import { RawTeam } from "@type/team.type";
+import { Link,  useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
-import { Col, ListGroup, Row } from "react-bootstrap";
-import Spinner from "@components/Spinner/Spinner";
-import TeamListItem from "./TeamListItem";
+import { ListGroup } from "react-bootstrap";
 
 interface Props {
   pageNum: number;
   rawTeams: RawTeam[];
 }
 
-const Teams = ({ rawTeams, pageNum }: Props) => {
-  const { teams, teamsLoading, refetchTeams } = useTeams(rawTeams);
+const TeamList = ({ rawTeams }: Props) => {
+  let history = useHistory();
 
-  useEffect(() => {
-    // retetch teams if pageNum is changed
-    refetchTeams();
-  }, [pageNum, refetchTeams]);
-
-  const renderTeams = (teams: TeamIntf[]) => {
+  const renderTeams = (teams: RawTeam[]) => {
     return teams.map((team) => {
-      return <TeamListItem key={team.id} team={team} />;
+      return (
+        <ListGroup.Item
+          key={team.id}
+          action
+          onClick={() => {
+            history.push(`/team/${team.id}`)
+          }}
+        >
+          <Link to={`/team/${team.id}`}>{team.name}</Link>
+        </ListGroup.Item>
+      );
     });
   };
 
-  if (teamsLoading) {
-    return <Spinner></Spinner>;
-  } else if (teams) {
-    return <TeamsListGroup>{renderTeams(teams)}</TeamsListGroup>;
-  } else {
-    return <></>;
-  }
+  return <TeamsListGroup>{renderTeams(rawTeams)}</TeamsListGroup>;
 };
 
-export default Teams;
+export default TeamList;
 
 const TeamsListGroup = styled(ListGroup)`
   margin-top: 1rem;

@@ -1,12 +1,9 @@
-
-import React, { useEffect, useCallback, useMemo, useState } from "react";
-import { useQuery, useQueries } from "react-query";
+import  { useCallback, useMemo} from "react";
+import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getUser,
   getTeam,
-  getAllUsers,
-  getAllTeams,
   getManyUsers,
 } from "@services/api.service";
 
@@ -47,7 +44,7 @@ const useTeamDetail = (teamId: string) => {
   });
 
   // step 2. get team lead 
-  const { data: teamLead, isLoading: teamLeadLoading } = useQuery(["teamLead", teamId],
+  const { isLoading: teamLeadLoading } = useQuery(["teamLead", teamId],
     () => {
       return getUser(teamDetails!.teamLeadId)
     },
@@ -66,7 +63,7 @@ const useTeamDetail = (teamId: string) => {
   )
 
   // step 2. get members details when toggled 
-  const { data, isLoading: membersLoading } = useQuery(["members", teamId],
+  const {  isLoading: membersLoading } = useQuery(["members", teamId],
     () => {
       return getManyUsers(teamDetails!.teamMemberIds)
     },

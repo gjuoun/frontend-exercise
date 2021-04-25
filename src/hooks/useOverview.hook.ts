@@ -1,16 +1,12 @@
 
-import React, { useEffect, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getUser,
-  getTeam,
-  getAllUsers,
   getAllTeams,
-  getManyUsers,
 } from "@services/api.service";
 
-import { RawTeam, Team, User } from "@type/team.type";
+import { RawTeam } from "@type/team.type";
 import { updateTeams as updateTeamsAction } from "@redux/team/team.action";
 
 

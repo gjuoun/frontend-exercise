@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useTeamDetail from "@hooks/useTeamDetail.hook";
-import { Redirect, useParams } from "react-router-dom";
-import TeamPreview from "@components/Team/TeamPreview";
+import { Redirect, useParams, useRouteMatch } from "react-router-dom";
 import styled from "styled-components/macro";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { Card, Col, Container, Form, Overlay, Row } from "react-bootstrap";
 import Spinner from "@components/Spinner/Spinner";
 import Member from "@components/Team/Member";
 import { Team as TeamIntf, User } from "@type/team.type";
@@ -17,8 +16,6 @@ const Team = () => {
   // getting teamId from `/team/:teamId`
   let { teamId } = useParams<Params>();
 
-  const [userInput, setUserInput] = useState("");
-
   const {
     updatedTeam,
     membersLoading,
@@ -26,8 +23,12 @@ const Team = () => {
     teamLoading,
   } = useTeamDetail(teamId);
 
+  /* -------------------------- start search function ------------------------- */
+  const [userInput, setUserInput] = useState("");
   const [searchResults, setSearchResults] = useState<User[]>([]);
+  const toolTipTarget = useRef(null);
 
+  // membersClone is used for search, including the teamlead
   const membersClone = useMemo(() => {
     if (updatedTeam?.members && updatedTeam?.teamLead) {
       const newMembers = [{ ...updatedTeam.teamLead }, ...updatedTeam.members];
@@ -43,8 +44,8 @@ const Team = () => {
     }
   }, [membersClone, setSearchResults]);
 
-  const searchMembers = useCallback(
-    debounce((searchString: string) => {
+  const searchMembers = useCallback((searchString: string) => {
+    const _self = debounce((searchString: string) => {
       setSearchResults(() => {
         const inputLowerCase = searchString.toLowerCase();
         const findMembers = membersClone.filter((member) => {
@@ -57,14 +58,17 @@ const Team = () => {
         });
         return findMembers;
       });
-    }, 500),
-    [setSearchResults, membersClone]
-  );
+    }, 500);
+
+    _self(searchString);
+  }, [setSearchResults, membersClone]);
 
   const handleOnChange = (searchString: string) => {
     setUserInput(searchString);
     searchMembers(searchString);
   };
+
+  /* ------------------------- end of search function ------------------------- */
 
   const renderTitle = (team: TeamIntf) => {
     return (
@@ -73,6 +77,7 @@ const Team = () => {
         <Col sm={4} className="d-flex justify-content-end">
           <Form>
             <Form.Control
+              ref={toolTipTarget}
               type="text"
               placeholder="search member"
               value={userInput}
@@ -81,6 +86,27 @@ const Team = () => {
               }}
             />
           </Form>
+
+          <Overlay
+            target={toolTipTarget.current}
+            show={userInput ? true : false}
+            placement="bottom"
+          >
+            {({ placement, arrowProps, show: _show, popper, ...props }) => (
+              <div
+                {...props}
+                style={{
+                  backgroundColor: "rgba(30, 30, 30, 0.8)",
+                  padding: "2px 10px",
+                  color: "white",
+                  borderRadius: 3,
+                  ...props.style,
+                }}
+              >
+                found {searchResults.length} results
+              </div>
+            )}
+          </Overlay>
         </Col>
       </Row>
     );
