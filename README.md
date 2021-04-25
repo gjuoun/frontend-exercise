@@ -50,7 +50,7 @@ Anyway, it's there, if you want to skip the redux part please ignore `./src/redu
 
 - `./src/pages/routes`
 
-  - routes for the whola app
+  - routes for the whole app
 
 - `./src/pages/Overview.tsx`
 
