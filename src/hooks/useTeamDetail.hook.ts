@@ -62,7 +62,7 @@ const useTeamDetail = (teamId: string) => {
     }
   )
 
-  // step 2. get members details when toggled 
+  // step 3. get members details when toggled 
   const {  isLoading: membersLoading } = useQuery(["members", teamId],
     () => {
       return getManyUsers(teamDetails!.teamMemberIds)
