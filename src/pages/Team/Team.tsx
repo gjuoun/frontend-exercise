@@ -150,9 +150,9 @@ const Team = () => {
       <Container>
         <Row>
           <TeamBreadcrumb>
-            <Breadcrumb.Item as={Link} to="/" href="/">
+            <Link className="breadcrumb-item" to={"/"}>
               Home
-            </Breadcrumb.Item>
+            </Link>
             <Breadcrumb.Item active>{updatedTeam.name}</Breadcrumb.Item>
           </TeamBreadcrumb>
         </Row>

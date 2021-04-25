@@ -161,8 +161,10 @@ const Overview = (props: Props) => {
               <Card.Subtitle className="mb-2 text-muted">
                 Click team name to view on the new page
               </Card.Subtitle>
-              <Card.Text>{renderRawTeams(searchResults)}</Card.Text>
-              <Pagination>{renderPagination(searchResults)}</Pagination>
+              {renderRawTeams(searchResults)}
+              <Pagination className="mt-3">
+                {renderPagination(searchResults)}
+              </Pagination>
             </Card.Body>
           </OverviewCard>
         </Row>
