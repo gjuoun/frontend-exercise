@@ -48,7 +48,7 @@ Anyway, it's there; if you want to skip the redux part, please ignore the`./src/
 
 ### Important files to look at
 
-- `./src/pages/routes`
+- `./src/pages/routes.tsx`
 
   - routes for the whole app
 
