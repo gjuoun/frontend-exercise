@@ -2,7 +2,7 @@
 
 > a simple team Overview app
 
-- Build with Create React App with Typescript
+- Build with `Create React App` and `Typescript`
 
 ## [Live Demo](https://frontend-exercise-jun.vercel.app/)
 
