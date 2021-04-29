@@ -4,7 +4,7 @@
 
 - Build with `Create React App` and `Typescript`
 
-## [Live Demo](https://frontend-exercise-jun.vercel.app/)
+## [Live Demo](https://gjuoun-teamoverview-exercise.vercel.app/)
 
 ## Usage
 
