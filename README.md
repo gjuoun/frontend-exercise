@@ -1,4 +1,4 @@
-# Frontend exercise
+# Team Overview exercise
 
 > a simple team Overview app
 
