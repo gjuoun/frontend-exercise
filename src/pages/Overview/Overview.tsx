@@ -40,26 +40,18 @@ const Overview = (props: Props) => {
   const [searchResults, setSearchResults] = useState<RawTeam[]>([]);
   const toolTipTarget = useRef(null);
 
-  const rawTeamsClone = useMemo(() => {
-    if (rawTeams) {
-      return rawTeams;
-    } else {
-      return [];
-    }
-  }, [rawTeams]);
-
   useEffect(() => {
-    if (rawTeamsClone.length) {
-      setSearchResults(rawTeamsClone);
+    if (rawTeams.length) {
+      setSearchResults(rawTeams);
     }
-  }, [rawTeamsClone, setSearchResults]);
+  }, [rawTeams, setSearchResults]);
 
   const searchTeams = useCallback(
     (searchString: string) => {
       const _self = debounce((searchString: string) => {
         setSearchResults(() => {
           const inputLowerCase = searchString.toLowerCase();
-          const findTeams = rawTeamsClone.filter((team) => {
+          const findTeams = rawTeams.filter((team) => {
             const teamNameLowerCase = team.name.toLocaleLowerCase();
             if (teamNameLowerCase.includes(inputLowerCase)) {
               return true;
@@ -72,13 +64,17 @@ const Overview = (props: Props) => {
       }, 500);
       _self(searchString);
     },
-    [setSearchResults, rawTeamsClone]
+    [setSearchResults, rawTeams]
   );
 
   const handleOnChange = (searchString: string) => {
     setUserInput(searchString);
-    searchTeams(searchString);
   };
+
+  useEffect(() => {
+    searchTeams(userInput);
+    setPageNum(1);
+  }, [userInput, searchTeams, setPageNum]);
 
   /* ------------------------- end of search function ------------------------- */
   const renderTitle = () => {
