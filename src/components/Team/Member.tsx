@@ -1,7 +1,9 @@
 import { User } from "@type/team.type";
 import { Button, Row, Col } from "react-bootstrap";
-import React from "react";
+import React, {Suspense} from "react";
 import { GrLocation, GrUser, GrUserManager } from "react-icons/gr";
+
+const Avatar = React.lazy(() => import("./Avatar"));
 
 const Member = ({
   member,
@@ -43,13 +45,9 @@ const Member = ({
         >
           <Row className="d-flex align-items-center ">
             <Col sm={2}>
-              <img
-                width={32}
-                height={32}
-                className="mr-3 rounded-circle"
-                src={member?.avatarUrl ?? ""}
-                alt="avatar"
-              />
+              <Suspense fallback={<></>}>
+                <Avatar src={member.avatarUrl} />
+              </Suspense>
             </Col>
             <Col>
               <Row className="d-flex  align justify-content-between">
