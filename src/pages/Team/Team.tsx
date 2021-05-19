@@ -126,6 +126,7 @@ const Team = () => {
               </div>
             )}
           </Overlay>
+            <p>Change</p>
         </Col>
       </Row>
     );
